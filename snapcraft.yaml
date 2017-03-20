@@ -3,14 +3,7 @@ version: 8.5.5
 summary: A Java Servlet and Java Server Pages container
 description: A Java Servlet and Java Server Pages container developed under the Apache License
 confinement: strict
-grade: devel
 
-apps:
-    tomcat:
-        daemon: simple
-        command: tomcat-launch
-        plugs: [network-bind]
-        
 parts:
     tomcat:
         plugin: ant
