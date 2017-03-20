@@ -1,0 +1,28 @@
+name: tomcat
+version: 8.5.5
+summary: A Java Servlet and Java Server Pages container
+description: A Java Servlet and Java Server Pages container developed under the Apache License
+confinement: strict
+grade: devel
+
+apps:
+    tomcat:
+        daemon: simple
+        command: tomcat-launch
+        plugs: [network-bind]
+        
+parts:
+    tomcat:
+        plugin: ant
+        source: http://svn.apache.org/repos/asf/tomcat/tc8.5.x/trunk/
+        source-type: svn
+        prepare: |
+          cp build.properties.default build.properties
+        install: |
+          cp -r output/build/* $SNAPCRAFT_PART_INSTALL
+        
+    launcher:
+        plugin: dump
+        source: .
+        prime:
+            - tomcat-launch
