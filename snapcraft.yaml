@@ -14,7 +14,7 @@ parts:
         install: |
           cp -r output/build/* $SNAPCRAFT_PART_INSTALL
         
-    launcher:
+    tomcat-launcher:
         plugin: dump
         source: .
         prime:
