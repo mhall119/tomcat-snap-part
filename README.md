@@ -18,7 +18,7 @@ To use this part, include the following in your snapcraft.yaml:
         plugin: dump
         organize:
             my.war: webapps/my.war
-        after: [tomcat, tomcat-launcher]
+        after: [tomcat]
 
 All you need is to put your war file into the ./webapps/ directory, and the 
 Tomcat part will take care of the rest, starting a daemon on port 8080 running

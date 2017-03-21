@@ -13,9 +13,4 @@ parts:
           cp build.properties.default build.properties
         install: |
           cp -r output/build/* $SNAPCRAFT_PART_INSTALL
-        
-    tomcat-launcher:
-        plugin: dump
-        source: .
-        prime:
-            - tomcat-launch
+          cp ../../../tomcat-launch $SNAPCRAFT_PART_INSTALL
