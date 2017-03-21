@@ -5,12 +5,24 @@ description: A Java Servlet and Java Server Pages container developed under the 
 confinement: strict
 
 parts:
-    tomcat:
-        plugin: ant
-        source: http://svn.apache.org/repos/asf/tomcat/tc8.5.x/trunk/
-        source-type: svn
-        prepare: |
-          cp build.properties.default build.properties
-        install: |
-          cp -r output/build/* $SNAPCRAFT_PART_INSTALL
-          cp ../../../tomcat-launch $SNAPCRAFT_PART_INSTALL
+  tomcat:
+    plugin: ant
+    source: http://svn.apache.org/repos/asf/tomcat/tc8.5.x/trunk/
+    source-type: svn
+    prepare: |
+      cp build.properties.default build.properties
+    install: |
+      cp -r output/build/* $SNAPCRAFT_PART_INSTALL
+      cat <<EOF > $SNAPCRAFT_PART_INSTALL/tomcat-launch
+      #!/bin/sh
+      export JRE_HOME=\${SNAP}/usr/lib/jvm/default-java/jre
+      export JAVA_HOME=\${SNAP}/usr/lib/jvm/default-java/jre
+      export CATALINA_HOME=\${SNAP}
+      export CATALINA_BASE=\${SNAP_DATA}
+      export CATALINA_TMPDIR=/tmp
+      mkdir -p \${CATALINA_BASE}/conf/
+      cp -n \${CATALINA_HOME}/conf/* \${CATALINA_BASE}/conf/
+      cp -n \${CATALINA_HOME}/webapps/* \${CATALINA_BASE}/webapps/
+      exec \${CATALINA_HOME}/bin/catalina.sh run
+      EOF
+      chmod +x $SNAPCRAFT_PART_INSTALL/tomcat-launch
